@@ -1,0 +1,32 @@
+src
+|-- main
+|   |-- java
+|   |   |-- com.uvg.infixpostfix
+|   |   |   |-- stack            # Paquete para la pila
+|   |   |   |   |-- Stack.java               # Interfaz de la pila
+|   |   |   |   |-- AbstractStack.java       # Clase abstracta de la pila
+|   |   |   |   |-- ArrayListStack.java      # Implementación con ArrayList
+|   |   |   |   |-- VectorStack.java         # Implementación con Vector
+|   |   |   |   |-- ListStack.java           # Implementación con listas
+|   |   |   |-- list             # Paquete para la lista
+|   |   |   |   |-- List.java                # Interfaz de la lista
+|   |   |   |   |-- AbstractList.java        # Clase abstracta de la lista
+|   |   |   |   |-- SinglyLinkedList.java    # Implementación simplemente encadenada
+|   |   |   |   |-- DoublyLinkedList.java    # Implementación doblemente encadenada
+|   |   |   |-- factory          # Paquete para el patrón Factory
+|   |   |   |   |-- StackFactory.java        # Factory para las pilas
+|   |   |   |   |-- ListFactory.java         # Factory para las listas
+|   |   |   |-- singleton        # Paquete para el patrón Singleton
+|   |   |   |   |-- CalculatorSingleton.java # Singleton de la calculadora
+|   |   |   |-- main
+|   |   |   |   |-- Main.java                # Clase principal
+|
+|-- test
+|   |-- java
+|   |   |-- com.uvg.infixpostfix
+|   |   |   |-- stack
+|   |   |   |   |-- StackTest.java           # Pruebas JUnit para la pila
+|   |   |   |-- list
+|   |   |   |   |-- ListTest.java            # Pruebas JUnit para la lista
+|   |   |   |-- calculator
+|   |   |   |   |-- CalculatorTest.java      # Pruebas JUnit para la calculadora
