@@ -1,44 +1,75 @@
 package Main.java.com.uvg.infixpostfix.singleton;
 
-public class CalculatorSingleton {
+import Main.java.com.uvg.infixpostfix.stack.Stack;
+import Main.java.com.uvg.infixpostfix.factory.StackFactory;
 
-    // Instancia privada estática de la clase
+public class CalculatorSingleton {
     private static CalculatorSingleton instance;
 
-    // Constructor privado para evitar instanciación externa
-    private CalculatorSingleton() {
-        // Aquí podrías inicializar cualquier cosa que necesite la calculadora
-    }
+    private CalculatorSingleton() {}
 
-    // Método público estático para obtener la instancia de la clase
     public static CalculatorSingleton getInstance() {
-        // Se crea la instancia solo si es nula (de forma perezosa)
         if (instance == null) {
             instance = new CalculatorSingleton();
         }
         return instance;
     }
 
-    // Métodos de la calculadora
-    public double add(double a, double b) {
-        return a + b;
+    public String infixToPostfix(String infix) {
+        StringBuilder postfix = new StringBuilder();
+        Stack<Character> stack = StackFactory.createStack(1); // Por defecto usa ArrayListStack
+
+        for (char ch : infix.toCharArray()) {
+            if (Character.isDigit(ch)) {
+                postfix.append(ch).append(' ');
+            } else if (ch == '(') {
+                stack.push(ch);
+            } else if (ch == ')') {
+                while (!stack.isEmpty() && stack.peek() != '(') {
+                    postfix.append(stack.pop()).append(' ');
+                }
+                stack.pop();
+            } else {
+                while (!stack.isEmpty() && precedence(ch) <= precedence(stack.peek())) {
+                    postfix.append(stack.pop()).append(' ');
+                }
+                stack.push(ch);
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            postfix.append(stack.pop()).append(' ');
+        }
+
+        return postfix.toString().trim();
     }
 
-    public double subtract(double a, double b) {
-        return a - b;
+    public int evaluatePostfix(String postfix) {
+        Stack<Integer> stack = StackFactory.createStack(1);
+
+        for (String token : postfix.split(" ")) {
+            if (Character.isDigit(token.charAt(0))) {
+                stack.push(Integer.parseInt(token));
+            } else {
+                int b = stack.pop();
+                int a = stack.pop();
+                switch (token.charAt(0)) {
+                    case '+': stack.push(a + b); break;
+                    case '-': stack.push(a - b); break;
+                    case '*': stack.push(a * b); break;
+                    case '/': stack.push(a / b); break;
+                }
+            }
+        }
+
+        return stack.pop();
     }
 
-    public double multiply(double a, double b) {
-        return a * b;
-    }
-
-    public double divide(double a, double b) {
-        if (b != 0) {
-            return a / b;
-        } else {
-            throw new ArithmeticException("No se puede dividir entre cero");
+    private int precedence(char op) {
+        switch (op) {
+            case '+': case '-': return 1;
+            case '*': case '/': return 2;
+            default: return -1;
         }
     }
-
-    // Otros métodos de la calculadora que desees agregar
 }

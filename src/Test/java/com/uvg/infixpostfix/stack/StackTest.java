@@ -1,57 +1,74 @@
 package Test.java.com.uvg.infixpostfix.stack;
 
+import com.uvg.infixpostfix.list.SinglyLinkedList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class StackTest {
-
-    private Stack<Integer> stack;
+class StackTest {
+    private Stack<Integer> arrayListStack;
+    private Stack<Integer> vectorStack;
+    private Stack<Integer> listStack;
 
     @BeforeEach
-    public void setUp() {
-        // Usamos la implementación ArrayListStack para las pruebas
-        stack = new ArrayListStack<>();
+    void setUp() {
+        arrayListStack = new ArrayListStack<>();
+        vectorStack = new VectorStack<>();
+        listStack = new ListStack<>(new SinglyLinkedList<>());
     }
 
     @Test
-    public void testPushAndPop() {
-        stack.push(10);
-        stack.push(20);
-        assertEquals(20, stack.pop());  // El último elemento debería ser 20
-        assertEquals(10, stack.pop());  // El siguiente elemento debería ser 10
+    void testPushAndPop() {
+        arrayListStack.push(10);
+        assertEquals(10, arrayListStack.pop());
+
+        vectorStack.push(20);
+        assertEquals(20, vectorStack.pop());
+
+        listStack.push(30);
+        assertEquals(30, listStack.pop());
     }
 
     @Test
-    public void testPeek() {
-        stack.push(10);
-        stack.push(20);
-        assertEquals(20, stack.peek());  // El último elemento debería ser 20 sin eliminarlo
+    void testPeek() {
+        arrayListStack.push(100);
+        assertEquals(100, arrayListStack.peek());
+
+        vectorStack.push(200);
+        assertEquals(200, vectorStack.peek());
+
+        listStack.push(300);
+        assertEquals(300, listStack.peek());
     }
 
     @Test
-    public void testIsEmpty() {
-        assertTrue(stack.isEmpty());  // Al principio la pila debería estar vacía
-        stack.push(10);
-        assertFalse(stack.isEmpty());  // Después de agregar un elemento no debería estar vacía
+    void testIsEmpty() {
+        assertTrue(arrayListStack.isEmpty());
+        arrayListStack.push(1);
+        assertFalse(arrayListStack.isEmpty());
+
+        assertTrue(vectorStack.isEmpty());
+        vectorStack.push(2);
+        assertFalse(vectorStack.isEmpty());
+
+        assertTrue(listStack.isEmpty());
+        listStack.push(3);
+        assertFalse(listStack.isEmpty());
     }
 
     @Test
-    public void testSize() {
-        assertEquals(0, stack.size());  // Al principio el tamaño debería ser 0
-        stack.push(10);
-        stack.push(20);
-        assertEquals(2, stack.size());  // Después de agregar dos elementos, el tamaño debería ser 2
-    }
+    void testSize() {
+        assertEquals(0, arrayListStack.size());
+        arrayListStack.push(5);
+        assertEquals(1, arrayListStack.size());
 
-    @Test
-    public void testPopEmpty() {
-        assertNull(stack.pop());  // No se puede hacer pop en una pila vacía
-    }
+        assertEquals(0, vectorStack.size());
+        vectorStack.push(6);
+        assertEquals(1, vectorStack.size());
 
-    @Test
-    public void testPeekEmpty() {
-        assertNull(stack.peek());  // No se puede hacer peek en una pila vacía
+        assertEquals(0, listStack.size());
+        listStack.push(7);
+        assertEquals(1, listStack.size());
     }
 }

@@ -1,7 +1,7 @@
 package Main.java.com.uvg.infixpostfix.stack;
 
 import java.util.ArrayList;
-class ArrayListStack<T> extends AbstractStack<T> {
+public class ArrayListStack<T> extends AbstractStack<T> {
     private ArrayList<T> stack = new ArrayList<>();
 
     @Override

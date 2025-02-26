@@ -1,6 +1,6 @@
 package Main.java.com.uvg.infixpostfix.list;
 
-class DoublyLinkedList<T> extends AbstractList<T> {
+public class DoublyLinkedList<T> extends AbstractList<T> {
     private class Node {
         T data;
         Node next;
